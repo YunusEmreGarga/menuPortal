@@ -1,0 +1,254 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="btn btn-primary" href="/" role="button">Anasayfa</a>
+        <a class="btn btn-primary ml-3" href="/kayitlar" role="button">Kayıtlar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+            </ul>
+            <li class="nav-item">
+                <a class="btn btn-primary" href="/login" role="button">Giriş Yap</a>
+            </li>
+            <li class="nav-item ml-3">
+                <button class="btn btn-danger" (click)="OturumuKapat()">Oturumu Kapat</button>
+            </li>
+        </div>
+    </div>
+</nav>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+
+            <h4>A) YEMEKLER</h4>
+            <table class="table table-hover table-dark">
+                <thead>
+                    <th>Yemek Adı</th>
+                    <th>Yemek No</th>
+                    <th>Kategori</th>
+                    <th>Durumu</th>
+                    <th></th>
+                    <th>Düzenle</th>
+                    <th>Sil</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let kayit of kayitlar">
+                        <td>{{kayit.urunAdi}}</td>
+                        <td>{{kayit.urunFiyati}}</td>
+                        <td>{{kayit.urunKategori}}</td>
+
+
+                        <td>
+                            <span class="badge badge-pill bg-success text-white" *ngIf="kayit.islem">Tamamlandı</span>
+                            <span class="badge badge-pill bg-danger text-white" *ngIf="!kayit.islem">Bekliyor</span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-outline-success btn-sm" (click)="TamamlaIptal(kayit,true)" *ngIf="!kayit.islem">Tamamlandı Yap</button>
+                            <button class="btn btn-outline-danger btn-sm" (click)="TamamlaIptal(kayit,false)" *ngIf="kayit.islem">Tamamlandı İptal Et</button>
+
+                        </td>
+                        <td><button class="btn btn-outline-warning" (click)="KayitDuzenle(kayit)">Düzenle</button></td>
+                        <td><button class="btn btn-outline-danger" (click)="KayitSil(kayit)">Sil</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Düzenle</h4>
+            <hr>
+            <form #frm="ngForm" (submit)="Kaydet()">
+                <div class="form-group">
+                    <label>Yemek Adı</label>
+                    <input type="text" class="form-control" name="ÜrünAdı" [(ngModel)]="secKayit.urunAdi" required>
+                    <input type="hidden" class="form-control" name="key" [(ngModel)]="secKayit.key">
+                </div>
+                <div class="form-group">
+                    <label>Yemek No</label>
+                    <input type="text" class="form-control" name="Fiyat" [(ngModel)]="secKayit.urunFiyati" required #urunFiyati Sadecesayi>
+                </div>
+                <div class="form-group">
+                    <label>Grubu</label>
+                    <input type="text" class="form-control" name="Kategori" [(ngModel)]="secKayit.urunKategori" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-success" [disabled]="frm.invalid">
+
+                </div>
+
+            </form>
+            <button class="btn btn-danger" (click)="Vazgec()">Vazgeç</button>
+
+            <div [ngClass]="sonuc.islem ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj?.length>0">
+                {{sonuc.mesaj}}</div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>B) İÇİÇEKLER</h4>
+            <table class="table table-hover table-dark">
+                <thead>
+                    <th>İçiçek Adı</th>
+                    <th>İçicek No</th>
+                    <th>Kategori</th>
+                    <th>Durumu</th>
+                    <th></th>
+
+                    <th>Düzenle</th>
+                    <th>Sil</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let kayitt of masa2">
+                        <td>{{kayitt.urunAdi2}}</td>
+                        <td>{{kayitt.urunFiyati2}}</td>
+                        <td>{{kayitt.urunKategori2}}</td>
+
+                        <td>
+                            <span class="badge badge-pill bg-success text-white" *ngIf="kayitt.islemm">Tamamlandı</span>
+                            <span class="badge badge-pill bg-danger text-white" *ngIf="!kayitt.islemm">Bekliyor</span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-outline-success btn-sm" (click)="TamamlaIptal(kayitt,true)" *ngIf="!kayitt.islemm">Tamamlandı Yap</button>
+                            <button class="btn btn-outline-danger btn-sm" (click)="TamamlaIptal(kayitt,false)" *ngIf="kayitt.islemm">Tamamlandı İptal Et</button>
+
+                        </td>
+                        <td><button class="btn btn-outline-warning" (click)="KayitDuzenlee(kayitt)">Düzenle</button></td>
+                        <td><button class="btn btn-outline-danger" (click)="KayitSill(kayitt)">Sil</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+
+        <div class="col-md-4">
+            <h4>Düzenle</h4>
+            <hr>
+            <form #frm="ngForm" (submit)="Kaydett()">
+                <div class="form-group">
+                    <label>İçiçek Adı</label>
+                    <input type="text" class="form-control" name="ÜrünAdı" [(ngModel)]="secKayitt.urunAdi2" required>
+                    <input type="hidden" class="form-control" name="key" [(ngModel)]="secKayitt.key">
+                </div>
+                <div class="form-group">
+                    <label>İçiçek No</label>
+                    <input type="text" class="form-control" name="Fiyat" [(ngModel)]="secKayitt.urunFiyati2" required>
+                </div>
+                <div class="form-group">
+                    <label>Grubu</label>
+                    <input type="text" class="form-control" name="Kategori" [(ngModel)]="secKayitt.urunKategori2" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-success" [disabled]="frm.invalid">
+
+                </div>
+
+            </form>
+            <button class="btn btn-danger" (click)="Vazgecc()">Vazgeç</button>
+
+
+
+            <div [ngClass]="sonuc.islemm ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesajj?.length>0">
+                {{sonuc.mesajj}}</div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>TATLILAR</h4>
+            <table class="table table-hover table-dark">
+                <thead>
+                    <th>Tatlı Adı</th>
+                    <th>Tatlı No</th>
+                    <th>Kategori</th>
+                    <th>Durumu</th>
+                    <th></th>
+
+                    <th>Düzenle</th>
+                    <th>Sil</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let kayit3 of tatli">
+                        <td>{{kayit3.urunAdi3}}</td>
+                        <td>{{kayit3.urunFiyati3}}</td>
+                        <td>{{kayit3.urunKategori3}}</td>
+  
+                        <td>
+                            <span class="badge badge-pill bg-success text-white" *ngIf="kayit3.islem3">Tamamlandı</span>
+                            <span class="badge badge-pill bg-danger text-white" *ngIf="!kayit3.islem3">Bekliyor</span>
+                        </td>
+
+                        <td>
+
+                            <button class="btn btn-outline-success btn-sm" (click)="TamamlaIptal(kayit3,true)" *ngIf="!kayit3.islem3">Tamamlandı Yap</button>
+                            <button class="btn btn-outline-danger btn-sm" (click)="TamamlaIptal(kayit3,false)" *ngIf="kayit3.islem3">Tamamlandı İptal Et</button>
+
+                        </td>
+                        <td><button class="btn btn-outline-warning" (click)="KayitDuzenlee(kayit3)">Düzenle</button></td>
+                        <td><button class="btn btn-outline-danger" (click)="KayitSill(kayit3)">Sil</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            <hr>
+        </div>
+  
+        <div class="col-md-4">
+            <h4>Düzenle</h4>
+            <hr>
+            <form #frm="ngForm" (submit)="Kaydet3()">
+                <div class="form-group">
+                    <label>Tatlı Adı</label>
+                    <input type="text" class="form-control" name="ÜrünAdı" [(ngModel)]="secKayit3.urunAdi3" required>
+                    <input type="hidden" class="form-control" name="key" [(ngModel)]="secKayit3.key">
+                </div>
+                <div class="form-group">
+                    <label>Tatlı No</label>
+                    <input type="text" class="form-control" name="Fiyat" [(ngModel)]="secKayit3.urunFiyati3" required #urunFiyati Sadecesayi>
+                </div>
+                <div class="form-group">
+                    <label>Grubu</label>
+                    <input type="text" class="form-control" name="Kategori" [(ngModel)]="secKayit3.urunKategori3" required>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Kaydet" class="btn btn-success" [disabled]="frm.invalid">
+
+                </div>
+
+            </form>
+            <button class="btn btn-danger" (click)="Vazgec3()">Vazgeç</button>
+
+            <div [ngClass]="sonuc.islem3 ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj3?.length>0">
+                {{sonuc.mesaj3}}</div>
+
+
+        </div>
+  
+    </div>
+  </div>

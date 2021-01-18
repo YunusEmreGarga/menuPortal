@@ -1,0 +1,61 @@
+<div class="container mt-5">
+  <div class="row">
+      <div class="col-md-8">
+          <h4>TATLILAR</h4>
+          <table class="table table-hover table-dark">
+              <thead>
+                  <th>Ürün Adı</th>
+                  <th>Fiyati</th>
+                  <th>Kategori</th>
+                  <th>Düzenle</th>
+                  <th>Sil</th>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let kayit3 of tatli">
+                      <td>{{kayit3.urunAdi3}}</td>
+                      <td>{{kayit3.urunFiyati3}}</td>
+                      <td>{{kayit3.urunKategori3}}</td>
+
+                      <td><button class="btn btn-outline-warning" (click)="KayitDuzenle3(kayit3)">Düzenle</button></td>
+                      <td><button class="btn btn-outline-danger" (click)="KayitSil3(kayit3)">Sil</button></td>
+                  </tr>
+              </tbody>
+          </table>
+          <hr>
+      </div>
+
+      <div class="col-md-4">
+          <h4>Düzenle</h4>
+          <hr>
+          <form #frm="ngForm" (submit)="Kaydet3()">
+              <div class="form-group">
+                  <label>Ürün Adı</label>
+                  <input type="text" class="form-control" name="ÜrünAdı" [(ngModel)]="secKayit3.urunAdi3" required>
+                  <input type="hidden" class="form-control" name="key" [(ngModel)]="secKayit3.key">
+              </div>
+              <div class="form-group">
+                  <label>Fiyatı</label>
+                  <input type="text" class="form-control" name="Fiyat" [(ngModel)]="secKayit3.urunFiyati3" required>
+              </div>
+              <div class="form-group">
+                  <label>Kategori</label>
+                  <input type="text" class="form-control" name="Kategori" [(ngModel)]="secKayit3.urunKategori3" required>
+              </div>
+
+              <div class="form-group">
+                  <input type="submit" value="Kaydet" class="btn btn-outline-success" [disabled]="frm.invalid">
+
+              </div>
+
+          </form>
+          <button class="btn btn-outline-danger" (click)="Vazgec3()">Vazgeç</button>
+
+          <button class="btn btn-outline-danger ml-3" (click)="OturumuKapat()">Oturumu Kapat</button>
+
+          <div [ngClass]="sonuc.islem3 ? 'alert alert-success':'alert alert-danger'" *ngIf="sonuc.mesaj3?.length>0">
+              {{sonuc.mesaj3}}</div>
+
+      </div>
+
+  </div>
+</div>
